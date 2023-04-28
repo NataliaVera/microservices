@@ -4,16 +4,15 @@ import com.msvc.usuario.entity.Hotel;
 import com.msvc.usuario.entity.Rate;
 import com.msvc.usuario.entity.User;
 import com.msvc.usuario.exceptions.ResourceNotFoundException;
+import com.msvc.usuario.external.services.HotelService;
 import com.msvc.usuario.repository.UserRepository;
 import com.msvc.usuario.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +27,9 @@ public class UserServiceImpl implements UserService {
     private RestTemplate restTemplate;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HotelService hotelService;
 
     @Override
     public User createUser(User user) {
@@ -54,10 +56,10 @@ public class UserServiceImpl implements UserService {
 
         List<Rate> rateList = rates.stream().map(rate -> {
             System.out.println(rate.getHotelId());
-            ResponseEntity<Hotel> forEntity =
-                    restTemplate.getForEntity("http://HOTEL-SERVICE/hotel/getbyid/"+rate.getHotelId(), Hotel.class);
-            Hotel hotel = forEntity.getBody();
-            logger.info("Respuesta con código de estado: {}", forEntity.getStatusCode());
+            //ResponseEntity<Hotel> forEntity =
+                    //restTemplate.getForEntity("http://HOTEL-SERVICE/hotel/getbyid/"+rate.getHotelId(), Hotel.class);
+            Hotel hotel = hotelService.getHotel(rate.getHotelId());
+            //logger.info("Respuesta con código de estado: {}", forEntity.getStatusCode());
 
             hotel.setHotelId(rate.getHotelId());
             rate.setHotel(hotel);

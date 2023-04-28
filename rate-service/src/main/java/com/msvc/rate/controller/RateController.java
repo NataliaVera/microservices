@@ -35,4 +35,14 @@ public class RateController {
     public ResponseEntity<List<Rate>> getAllRatesByHotel(@PathVariable String hotelid){
         return ResponseEntity.status(HttpStatus.OK).body(rateService.getAllRatesByHotelId(hotelid));
     }
+
+    @PutMapping("/rates/update/{rateid}")
+    public ResponseEntity<Rate> updateRate(@PathVariable String rateid,@RequestBody Rate rate){
+        return null;
+    }
+
+    @DeleteMapping("/rates/delete/{rateid}")
+    public ResponseEntity<Rate> deleteRate(@PathVariable String rateid){
+        return null;
+    }
 }
