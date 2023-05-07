@@ -3,6 +3,7 @@ package com.msvc.usuario.controller;
 import com.msvc.usuario.entity.User;
 import com.msvc.usuario.service.UserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,14 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
+    int cantidadReintentos = 1;
     @GetMapping("/{userid}")
-    @CircuitBreaker(name="ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
+    //@CircuitBreaker(name="ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
+    @Retry(name="ratingHotelRetry", fallbackMethod = "ratingHotelFallback")
     public ResponseEntity<User> getUserById(@PathVariable String userid){
+        log.info("Listar un solo usuario: Usuario controller");
+        log.info("Cantidad reintentos: {}", cantidadReintentos);
+        cantidadReintentos++;
         User user = userService.getUserById(userid);
 
         return ResponseEntity.ok(user);
