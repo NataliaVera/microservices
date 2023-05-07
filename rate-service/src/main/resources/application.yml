@@ -15,4 +15,5 @@ spring:
     name: RATE-SERVICE
 
   config:
-    import: optional:configserver:http://localhost:8085
+    enabled: false
+    import: optional:configserver:instead
