@@ -13,6 +13,8 @@ spring:
           uri: lb://USER-SERVICE
           predicates :
               - Path=/users/**
+          filters:
+            - AuthFilter
 
         - id: RATE-SERVICE
           uri: lb://RATE-SERVICE
@@ -23,6 +25,11 @@ spring:
           uri: lb://HOTEL-SERVICE
           predicates:
             - Path=/hotel/**,/staffs/**
+
+        - id: AUTH-SERVICE
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
 
 
 eureka:
