@@ -1,7 +1,6 @@
 package com.auth.jwt.security;
 
 import com.auth.jwt.dto.RequestDto;
-import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +21,9 @@ public class RouteValidator {
         this.paths = paths;
     }
 
+    //Se encarga de validar
     public boolean isAdmin(RequestDto requestDto){
-        return paths.stream().anyMatch(p ->
-                Pattern.matches(p.getUri(),requestDto.getUri()) && p.getMethod().equals(requestDto.getMethod()));
+        return paths.stream().anyMatch(path ->
+                Pattern.matches(path.getUri(), requestDto.getUri()) && path.getMethod().equals(requestDto.getMethod()));
     }
 }

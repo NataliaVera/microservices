@@ -6,7 +6,6 @@ import com.auth.jwt.dto.RequestDto;
 import com.auth.jwt.dto.TokenDto;
 import com.auth.jwt.entity.AuthUser;
 import com.auth.jwt.service.AuthService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
